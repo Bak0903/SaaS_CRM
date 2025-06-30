@@ -62,7 +62,7 @@ TENANT_MODEL = "contacts.Tenant"
 TENANT_DOMAIN_MODEL = None
 
 MIDDLEWARE = [
-    "app.middleware.SchemaMiddleware",
+    "contacts.middleware.SchemaMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
