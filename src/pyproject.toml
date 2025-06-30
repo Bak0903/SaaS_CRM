@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "contact-svc"
+version = "0.1.0"
+description = ""
+authors = ["bakai0903 <bakai0903@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.2.3"
+django-ninja = "^1.4.3"
+psycopg2-binary = "^2.9.10"
+django-tenants = "^3.8.0"
+pytest = "^8.4.1"
+flake8 = "^7.3.0"
+bandit = "^1.8.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
