@@ -9,9 +9,6 @@ class Tenant(TenantMixin):
 
     auto_create_schema = True
 
-    class Meta:
-        tenant_model = False
-
 
 class Contact(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
