@@ -43,7 +43,7 @@ ALLOWED_HOSTS = []
 
 SHARED_APPS = [
     "django_tenants",
-    "app",
+    "contacts",
     'django.contrib.admin',
     "django.contrib.contenttypes",
     "django.contrib.auth",
@@ -53,7 +53,7 @@ SHARED_APPS = [
 ]
 
 TENANT_APPS = [
-    "app",
+    "contacts",
 ]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
