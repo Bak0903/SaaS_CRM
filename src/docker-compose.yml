@@ -12,10 +12,23 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
 
-#  redis:
-#    image: redis:7
-#    ports:
-#      - "6379:6379"
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: poetry run celery -A app worker --loglevel=info
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379
+      - DJANGO_SETTINGS_MODULE=app.settings
+    volumes:
+      - .:/app
 
   web:
     build: .
@@ -28,14 +41,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
-#      - redis
+      - redis
     env_file:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_HOST=db
-      #      - REDIS_URL=${REDIS_URL}
 
 volumes:
   postgres_data:
