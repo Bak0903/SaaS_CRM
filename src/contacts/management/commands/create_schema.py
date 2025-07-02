@@ -5,8 +5,7 @@ from contacts.models import Tenant
 class Command(BaseCommand):
     help = "Create new tenant schema"
 
-    @staticmethod
-    def add_arguments(parser):
+    def add_arguments(self, parser):
         parser.add_argument("schema", type=str, help="Schema name (e.g. acme)")
         parser.add_argument("name", type=str, help="Tenant name")
 

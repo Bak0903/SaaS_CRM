@@ -16,7 +16,9 @@ class Migration(migrations.Migration):
             name='Tenant',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('schema_name', models.CharField(db_index=True, max_length=63, unique=True, validators=[django_tenants.postgresql_backend.base._check_schema_name])),
+                ('schema_name', models.CharField(
+                    db_index=True, max_length=63, unique=True,
+                    validators=[django_tenants.postgresql_backend.base._check_schema_name])),
                 ('name', models.CharField(max_length=100)),
             ],
             options={
