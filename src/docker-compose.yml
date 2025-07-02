@@ -53,6 +53,7 @@ services:
       - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_HOST=db
+      - PYTHONPATH=/src
 
 volumes:
   postgres_data:
