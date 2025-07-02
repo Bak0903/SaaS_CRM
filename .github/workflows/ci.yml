@@ -38,18 +38,24 @@ jobs:
 
     - name: Install dependencies
       run: |
+        cd src
         poetry config virtualenvs.create false
         poetry install
 
     - name: Run flake8
-      run: poetry run flake8 . --count --statistics
+      run: |
+        cd src
+        poetry run flake8 . --count --statistics
 
     - name: Run bandit
-      run: poetry run bandit -r . -ll --skip B101
+      run: |
+        cd src
+        poetry run bandit -r . -ll --skip B101
 
     - name: Run tests
       env:
         DATABASE_URL: postgres://postgres_usr:postgres_pswd@localhost:5432/contacts_db
       run: |
+        cd src
         poetry run python manage.py migrate --noinput
         poetry run pytest
