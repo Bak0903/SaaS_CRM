@@ -19,7 +19,10 @@ services:
 
   celery:
     build: .
-    command: poetry run celery -A app worker --loglevel=info
+    command: >
+      bash -c "
+            sleep 10 && 
+            poetry run celery -A app worker --loglevel=info"
     depends_on:
       - db
       - redis
@@ -33,8 +36,10 @@ services:
   web:
     build: .
     command: >
-      bash -c "poetry run python manage.py migrate --noinput &&
-               poetry run python manage.py runserver 0.0.0.0:8000"
+      bash -c "
+              sleep 10 &&
+              poetry run python manage.py migrate --noinput &&
+              poetry run python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
