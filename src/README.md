@@ -65,6 +65,16 @@ docker compose exec web poetry run bandit -r app
 ```
 docker compose exec web poetry run celery -A app worker --loglevel=info
 ```
+### Вызов задачи вручную через Django shell
+Чтобы вручную вызвать Celery-задачу find_old_contacts, зайдите в shell контейнера:
+```
+docker compose exec web poetry run python manage.py shell
+```
+В интерактивной оболочке выполните:
+```
+from contacts.tasks import find_old_contacts
+find_old_contacts.delay()
+```
 
 ## Время, потраченное на задание
 ~ 12 часов
