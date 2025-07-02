@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: contacts_db
+          POSTGRES_USER: postgres_usr
+          POSTGRES_PASSWORD: postgres_pswd
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres_usr"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Poetry
+      run: curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install dependencies
+      run: |
+        poetry config virtualenvs.create false
+        poetry install
+
+    - name: Run flake8
+      run: poetry run flake8 . --count --statistics
+
+    - name: Run bandit
+      run: poetry run bandit -r . -ll --skip B101
+
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres_usr:postgres_pswd@localhost:5432/contacts_db
+      run: |
+        poetry run python manage.py migrate --noinput
+        poetry run pytest
